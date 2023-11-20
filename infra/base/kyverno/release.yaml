@@ -1,23 +1,16 @@
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
+apiVersion: argoproj.io/v1alpha1
+kind: Application
 metadata:
-  name: kyverno
+  name: kyverno-helm
   namespace: kyverno
 spec:
-  releaseName: kyverno
-  chart:
-    spec:
-      chart: ./charts/kyverno
-      sourceRef:
-        kind: GitRepository
-        name: kyverno
-        namespace: flux-system
-  interval: 15m
-  install:
-    remediation:
-      retries: 2
-  valuesFrom:
-    - kind: ConfigMap
-      name: kyverno-generic-values
-    - kind: ConfigMap
-      name: kyverno-environment-values
+  project: default
+  source:
+    chart: kyverno
+    repoURL:  https://kyverno.github.io/kyverno/
+    targetRevision: 3.1.0
+    helm:
+      releaseName: kyverno
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kyverno
