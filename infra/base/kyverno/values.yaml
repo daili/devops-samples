@@ -1,0 +1,21 @@
+initImage:
+  repository: cdtools-docker.apro.nbnco.net.au/kyverno/kyvernopre
+
+nodeAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+    nodeSelectorTerms:
+      - matchExpressions:
+          - key: dna.k8s.application
+            operator: In
+            values:
+              - System
+
+tolerations:
+  - key: SystemDedicated
+    operator: Exists
+    effect: NoSchedule
+
+image:
+  repository: cdtools-docker.apro.nbnco.net.au/kyverno/kyverno
+
+replicaCount: 3

@@ -1,0 +1,20 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: kyverno
+  namespace: flux-system
+spec:
+  interval: 1h0m0s
+  ref:
+    tag: v1.7.5
+  secretRef:
+    name: flux-system
+  url: https://github.com/nbnco/itc-kyverno.git
+  ignore: |
+    # exclude all
+    /*
+    # include chart dir
+    !/charts/kyverno
+    /charts/kyverno/README.md
+    /charts/kyverno/README.md.gotmpl
